@@ -52,7 +52,21 @@ jobs:
           name: site-gestion
           path: _site/
 
-      - name: Livrer l'artefact pour GitHub Pages
+      - name: Livrer l'artedeployer:
+    needs: construire
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - name: Déployer sur GitHub Pages
+        id: deploiement
+        uses: actions/deploy-pages@v5fact pour GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site/
+
