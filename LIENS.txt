@@ -1,0 +1,10 @@
+==================================================
+ LIVRABLE DU TP CI/CD - GESTION DES ÉTUDIANTS
+ Nom / Prénom : Aissatou Marone
+==================================================
+
+1. Lien vers le dépôt GitHub (Code source & Workflows) :
+https://github.com/aissatoumarone99-ux/gestion-etudiants-cicd
+
+2. Lien vers le site web déployé (GitHub Pages / Pipeline) :
+https://aissatoumarone99-ux.github.io/gestion-etudiants-cicd/
