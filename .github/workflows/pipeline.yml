@@ -1,10 +1,11 @@
-name: Gestion des étudiants
+
+name: Gestion des etudiants
 
 on:
-  ........:                 # (1)
-    branches: [main]
-  ........:                 # (2)
-    branches: [main]
+  push:
+    branches: [ principale, main ]
+  pull_request:
+    branches: [ principale, main ]
   workflow_dispatch:
 
 jobs:
@@ -12,15 +13,46 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Récupérer le code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       - name: Installer Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@v5
         with:
-          python-version: ........   # (3)
+          python-version: "3.12"
 
-      - name: Installer pytest
-        run: pip install pytest
+      - name: Installer les dépendances
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
 
       - name: Lancer les tests
-        run: ........              # (4)
+        run: |
+          pytest
+
+  construire:
+    needs: tester
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fabriquer le site
+        run: |
+          python generer.py
+          ls -l _site
+
+      - name: Livrer l'artefact à télécharger
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-gestion
+          path: _site/
+
+      - name: Livrer l'artefact pour GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site/
